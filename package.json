@@ -1,0 +1,48 @@
+{
+  "name": "ppt-template-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.726.1",
+    "@aws-sdk/s3-request-presigner": "^3.828.0",
+    "@heroicons/react": "^2.1.1",
+    "@stagewise-plugins/react": "^0.4.7",
+    "@stagewise/toolbar-next": "^0.4.7",
+    "@supabase/supabase-js": "^2.39.3",
+    "autoprefixer": "^10.4.17",
+    "aws-sdk": "^2.1692.0",
+    "date-fns": "^4.1.0",
+    "jszip": "^3.10.1",
+    "next": "^14.1.0",
+    "postcss": "^8.4.35",
+    "pptx2json": "^0.0.10",
+    "pptxjs": "^0.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sharp": "^0.34.2",
+    "swiper": "^11.0.6",
+    "tailwind-scrollbar-hide": "^4.0.0",
+    "tailwindcss": "^3.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.1",
+    "@types/react": "^19.1.8",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.1.0",
+    "typescript": "^5.8.3"
+  },
+  "description": "A modern web application for browsing and downloading professional PowerPoint templates. Built with Next.js, Supabase, and Cloudflare R2.",
+  "main": "next.config.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

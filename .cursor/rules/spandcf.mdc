@@ -1,0 +1,52 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+supadata表结构
+sql-- PPT主表
+CREATE TABLE ppt_files (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  title VARCHAR(255) NOT NULL,
+  file_name VARCHAR(255) NOT NULL,
+  file_size BIGINT NOT NULL, -- 字节数
+  page_count INTEGER NOT NULL,
+  file_type VARCHAR(10) DEFAULT 'pptx',
+  download_count INTEGER DEFAULT 0,
+  view_count INTEGER DEFAULT 0,
+  r2_file_key VARCHAR(500) NOT NULL, -- R2存储路径
+  preview_generated BOOLEAN DEFAULT false,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+  category VARCHAR(50),
+subcategory VARCHAR(100),
+tags TEXT[]; -- 存储标签数组
+);
+
+-- PPT预览页面表
+CREATE TABLE ppt_previews (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  ppt_id UUID REFERENCES ppt_files(id) ON DELETE CASCADE,
+  page_number INTEGER NOT NULL,
+  preview_url VARCHAR(500), -- R2中预览图的URL
+  thumbnail_url VARCHAR(500), -- 缩略图URL
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- 索引优化
+CREATE INDEX idx_ppt_files_created_at ON ppt_files(created_at DESC);
+CREATE INDEX idx_ppt_previews_ppt_id ON ppt_previews(ppt_id, page_number);
+
+
+cloudflare R2文件结构
+/ppt-files/
+  /{ppt_id}/
+    /original/
+      - presentation.pptx (原始文件)
+    /previews/
+      - page-1.jpg (高清预览图)
+      - page-1-thumb.jpg (缩略图)
+      - page-2.jpg
+      - page-2-thumb.jpg
+      ...
+
