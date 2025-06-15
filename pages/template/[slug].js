@@ -172,18 +172,45 @@ export default function TemplateDetail({ template }) {
       <Header />
       <main>
         {/* Main Title Section */}
-        <section className="py-[60px] pb-[40px] text-center">
+        <section className="py-[30px] text-center">
           <div className="max-w-[1200px] mx-auto px-5">
             <h1 className="text-[48px] font-bold text-[#1d1d1f] mb-4 tracking-tight">{template.title}</h1>
+            <div className="flex items-center justify-center gap-4">
+              {/* Category */}
+              <div className="flex items-center gap-2">
+                <span className="text-[15px] font-medium text-gray-700">Category:</span>
+                <span className="px-3 py-1.5 bg-[#f5f5f7] text-[#007aff] rounded-[20px] text-sm font-medium border border-gray-200">
+                  {template.category}
+                </span>
+              </div>
+
+              {/* Subcategory */}
+              {template.subcategory && (
+                <div className="flex items-center gap-2">
+                  <span className="text-[15px] font-medium text-gray-700">Subcategory:</span>
+                  <span className="px-3 py-1.5 bg-[#f5f5f7] text-[#007aff] rounded-[20px] text-sm font-medium border border-gray-200">
+                    {template.subcategory}
+                  </span>
+                </div>
+              )}
+
+              {/* Tag */}
+              <div className="flex items-center gap-2">
+                <span className="text-[15px] font-medium text-gray-700">Tag:</span>
+                <span className="px-3 py-1.5 bg-[#f5f5f7] text-[#007aff] rounded-[20px] text-sm font-medium border border-gray-200">
+                  presentation
+                </span>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Hero Section */}
         <section className="pt-[40px] pb-[100px]">
-          <div className="max-w-[1200px] mx-auto px-5">
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-20 items-start">
+          <div className="max-w-[1350px] mx-auto px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 items-start">
               {/* Left - Preview Section */}
-              <div className="relative">
+              <div className="relative max-w-[804px]">
                 <div className="relative bg-white rounded-[20px] shadow-[0_20px_40px_rgba(0,0,0,0.1)] overflow-hidden aspect-[16/9] border border-gray-100 mb-6 transition-transform duration-300">
                   <div className="w-full h-full relative overflow-hidden">
                     {template.ppt_previews && template.ppt_previews.length > 0 ? (
@@ -226,7 +253,7 @@ export default function TemplateDetail({ template }) {
                 </div>
 
                 {/* Thumbnail Navigation */}
-                <div className="flex overflow-x-auto gap-4 pb-4 custom-scrollbar snap-x snap-mandatory scroll-smooth">
+                <div className="flex overflow-x-auto gap-4 pb-4 pt-2 custom-scrollbar snap-x snap-mandatory scroll-smooth">
                   {template.ppt_previews?.map((preview, index) => (
                     <button
                       key={preview.id}
@@ -234,62 +261,96 @@ export default function TemplateDetail({ template }) {
                       onClick={() => goToSlide(index)}
                       className={`flex-shrink-0 w-[calc(20%-16px)] aspect-[16/9] rounded-lg overflow-hidden border-2 transition-all duration-300 snap-center ${
                         currentSlide === index
-                          ? 'border-blue-500 shadow-lg scale-105'
+                          ? 'border-blue-500 shadow-lg scale-[1.02]'
                           : 'border-transparent hover:border-gray-300'
                       }`}
                     >
-                      <img
-                        src={preview.thumbnail_url}
-                        alt={`Thumbnail ${index + 1}`}
-                        className="w-full h-full object-cover"
-                        onError={(e) => handleImageError(e, `thumbnail-${preview.id}`, true)}
-                      />
+                      <div className="w-full h-full relative">
+                        <img
+                          src={preview.thumbnail_url}
+                          alt={`Thumbnail ${index + 1}`}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          onError={(e) => handleImageError(e, `thumbnail-${preview.id}`, true)}
+                        />
+                      </div>
                     </button>
                   ))}
                 </div>
               </div>
 
               {/* Right - Info Section */}
-              <div className="bg-white rounded-[20px] p-10 shadow-[0_4px_20px_rgba(0,0,0,0.05)] lg:sticky lg:top-[120px]">
-                <div className="category-tag mb-8">
-                  <span className="inline-block px-4 py-2 bg-[#f5f5f7] text-[#007aff] rounded-[20px] text-sm font-medium border border-gray-200">
-                    {template.category}
-                  </span>
+              <div className="bg-white rounded-[20px] p-8 shadow-[0_4px_20px_rgba(0,0,0,0.05)] w-[380px]">
+                <div className="h-[84px] mb-4">
+                  <h2 className="text-[28px] font-semibold text-[#1d1d1f] leading-tight">{template.title}</h2>
                 </div>
-                <h2 className="text-[28px] font-semibold text-[#1d1d1f] mb-4 leading-tight">{template.title}</h2>
-                <p className="text-[17px] text-[#515154] leading-[1.5] mb-8">
-                  {template.description || '这是一套精心设计的商务简约风格PPT模板，采用现代化的设计理念和清晰的布局结构，适用于企业汇报、产品发布、项目展示等多种商务场景。模板包含丰富的页面样式，让您的演示更加专业和出色。'}
-                </p>
+                <div className="relative group mb-6">
+                  <div className="h-[102px] overflow-hidden">
+                    <p className="text-[17px] text-[#515154] leading-[1.5] line-clamp-4 group-hover:line-clamp-none transition-all duration-300">
+                      {template.description || '这是一套精心设计的商务简约风格PPT模板，采用现代化的设计理念和清晰的布局结构，适用于企业汇报、产品发布、项目展示等多种商务场景。模板包含丰富的页面样式，让您的演示更加专业和出色。'}
+                    </p>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-300"></div>
+                </div>
 
-                <div className="grid grid-cols-2 gap-6 mb-8 text-gray-700">
-                  <div className="flex flex-col">
-                    <span className="text-[13px] text-[#86868b] uppercase font-medium tracking-[0.5px] mb-1">Downloads</span>
-                    <span className="text-[17px] font-medium text-[#1d1d1f]">{template.download_count || 0}</span>
+                <div className="grid grid-cols-2 gap-4 mb-6 text-gray-700">
+                  <div className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-gray-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="7 10 12 15 17 10"/>
+                      <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    <span className="text-[13px] font-semibold flex-shrink-0">Downloads:</span>
+                    <span className="text-[13px]">{template.downloads || 0}</span>
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-[13px] text-[#86868b] uppercase font-medium tracking-[0.5px] mb-1">Views</span>
-                    <span className="text-[17px] font-medium text-[#1d1d1f]">{template.view_count || 0}</span>
+                  <div className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-gray-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span className="text-[13px] font-semibold flex-shrink-0">Views:</span>
+                    <span className="text-[13px]">{template.views || 0}</span>
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-[13px] text-[#86868b] uppercase font-medium tracking-[0.5px] mb-1">File Size</span>
-                    <span className="text-[17px] font-medium text-[#1d1d1f]">{(template.file_size / (1024 * 1024)).toFixed(2)} MB</span>
+                  <div className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-gray-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="7 10 12 15 17 10"/>
+                      <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    <span className="text-[13px] font-semibold flex-shrink-0">File Size:</span>
+                    <span className="text-[13px]">{(template.file_size / (1024 * 1024)).toFixed(2)}M</span>
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-[13px] text-[#86868b] uppercase font-medium tracking-[0.5px] mb-1">Slides</span>
-                    <span className="text-[17px] font-medium text-[#1d1d1f]">{template.page_count}</span>
+                  <div className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-gray-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    </svg>
+                    <span className="text-[13px] font-semibold flex-shrink-0">Slides:</span>
+                    <span className="text-[13px]">{template.slides || 36}</span>
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-[13px] text-[#86868b] uppercase font-medium tracking-[0.5px] mb-1">Aspect Ratio</span>
-                    <span className="text-[17px] font-medium text-[#1d1d1f]">{template.aspect_ratio || '16:9'}</span>
+                  <div className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-gray-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    </svg>
+                    <span className="text-[13px] font-semibold flex-shrink-0">Aspect Ratio:</span>
+                    <span className="text-[13px]">{template.aspect_ratio || '16:9'}</span>
                   </div>
-                  {/* Add more stats if needed, e.g., Update Time */}
-                  <div className="flex flex-col">
-                    <span className="text-[13px] text-[#86868b] uppercase font-medium tracking-[0.5px] mb-1">Format</span>
-                    <span className="text-[17px] font-medium text-[#1d1d1f]">PPTX</span>
+                  <div className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-gray-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                      <polyline points="14 2 14 8 20 8"/>
+                      <line x1="16" y1="13" x2="8" y2="13"/>
+                      <line x1="16" y1="17" x2="8" y2="17"/>
+                      <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                    <span className="text-[13px] font-semibold flex-shrink-0">Format:</span>
+                    <span className="text-[13px]">{template.format || 'PPTX'}</span>
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-[13px] text-[#86868b] uppercase font-medium tracking-[0.5px] mb-1">Update Time</span>
-                    <span className="text-[17px] font-medium text-[#1d1d1f]">2024-12-15</span>
+                  <div className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-gray-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    <span className="text-[13px] font-semibold flex-shrink-0">Update Time:</span>
+                    <span className="text-[13px] min-w-[90px]">{template.update_time || '2024-12-15'}</span>
                   </div>
                 </div>
 
@@ -302,19 +363,6 @@ export default function TemplateDetail({ template }) {
                   {isDownloading ? 'Downloading...' : `Download Template (${(template.file_size / (1024 * 1024)).toFixed(2)} MB)`}
                 </button>
                 <p className="text-center text-gray-500 text-sm mt-3">Free download • PowerPoint format • {template.page_count} slides included</p>
-
-                {template.tags && template.tags.length > 0 && (
-                  <div className="mt-8">
-                    <h3 className="text-base font-semibold text-gray-900 mb-3">Tags:</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {template.tags.map((tag) => (
-                        <span key={tag} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm border border-gray-200">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -323,67 +371,50 @@ export default function TemplateDetail({ template }) {
         {/* Advantages Section */}
         <section className="py-[100px] bg-white">
           <div className="max-w-[1200px] mx-auto px-5">
-            <h2 className="text-[40px] font-bold text-[#1d1d1f] text-center mb-5">为什么选择我们</h2>
-            <p className="text-[21px] text-[#86868b] text-center mb-20">六大核心优势，让您的演示更出色</p>
+            <h2 className="text-[40px] font-bold text-[#1d1d1f] text-center mb-5">Why Choose Us</h2>
+            <p className="text-[21px] text-[#86868b] text-center mb-20">Six Core Advantages, Make Your Presentation More Excellent</p>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              <div className="text-center py-10 px-8 rounded-[20px] transition-all duration-300 bg-[#fbfbfd] hover:bg-white hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:translate-y-[-4px]">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#007aff] to-[#0051d5] rounded-2xl flex items-center justify-center mx-auto mb-6 text-[28px] text-white">
-                  🎨
-                </div>
-                <h3 className="text-[21px] font-semibold text-[#1d1d1f] mb-3">专业设计</h3>
-                <p className="text-[17px] text-[#515154] leading-[1.5]">
-                  由资深设计师精心打造，每个细节都经过反复打磨，确保视觉效果达到商业级别的专业标准。
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              <div className="bg-white rounded-[20px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+                <div className="text-[32px] mb-4">🎨</div>
+                <h3 className="text-[20px] font-semibold text-[#1d1d1f] mb-2">Professional Design</h3>
+                <p className="text-[15px] text-[#515154] leading-[1.5]">
+                  Crafted by experienced designers, every detail is meticulously refined to ensure commercial-grade visual excellence.
                 </p>
               </div>
-
-              <div className="text-center py-10 px-8 rounded-[20px] transition-all duration-300 bg-[#fbfbfd] hover:bg-white hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:translate-y-[-4px]">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#007aff] to-[#0051d5] rounded-2xl flex items-center justify-center mx-auto mb-6 text-[28px] text-white">
-                  ⚡
-                </div>
-                <h3 className="text-[21px] font-semibold text-[#1d1d1f] mb-3">高效便捷</h3>
-                <p className="text-[17px] text-[#515154] leading-[1.5]">
-                  即下即用的模板设计，无需复杂的修改流程，只需替换文字和图片，即可快速完成专业级演示文稿。
+              <div className="bg-white rounded-[20px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+                <div className="text-[32px] mb-4">⚡</div>
+                <h3 className="text-[20px] font-semibold text-[#1d1d1f] mb-2">Efficient & Ready-to-Use</h3>
+                <p className="text-[15px] text-[#515154] leading-[1.5]">
+                  Ready-to-use templates require no complex modifications. Simply replace text and images for a professional presentation.
                 </p>
               </div>
-
-              <div className="text-center py-10 px-8 rounded-[20px] transition-all duration-300 bg-[#fbfbfd] hover:bg-white hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:translate-y-[-4px]">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#007aff] to-[#0051d5] rounded-2xl flex items-center justify-center mx-auto mb-6 text-[28px] text-white">
-                  🔧
-                </div>
-                <h3 className="text-[21px] font-semibold text-[#1d1d1f] mb-3">易于编辑</h3>
-                <p className="text-[17px] text-[#515154] leading-[1.5]">
-                  采用标准PowerPoint格式，所有元素均可自由编辑，支持一键换色、字体调整等个性化定制功能。
+              <div className="bg-white rounded-[20px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+                <div className="text-[32px] mb-4">🔧</div>
+                <h3 className="text-[20px] font-semibold text-[#1d1d1f] mb-2">Easy to Edit</h3>
+                <p className="text-[15px] text-[#515154] leading-[1.5]">
+                  Standard PowerPoint format allows free editing of all elements, supporting one-click color changes and font adjustments.
                 </p>
               </div>
-
-              <div className="text-center py-10 px-8 rounded-[20px] transition-all duration-300 bg-[#fbfbfd] hover:bg-white hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:translate-y-[-4px]">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#007aff] to-[#0051d5] rounded-2xl flex items-center justify-center mx-auto mb-6 text-[28px] text-white">
-                  📱
-                </div>
-                <h3 className="text-[21px] font-semibold text-[#1d1d1f] mb-3">多设备兼容</h3>
-                <p className="text-[17px] text-[#515154] leading-[1.5]">
-                  完美适配各种屏幕尺寸和演示设备，无论是电脑、平板还是投影仪，都能呈现最佳的显示效果。
+              <div className="bg-white rounded-[20px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+                <div className="text-[32px] mb-4">📱</div>
+                <h3 className="text-[20px] font-semibold text-[#1d1d1f] mb-2">Multi-device Compatible</h3>
+                <p className="text-[15px] text-[#515154] leading-[1.5]">
+                  Perfectly adapts to various screen sizes and display devices, ensuring optimal presentation on computers, tablets, and projectors.
                 </p>
               </div>
-
-              <div className="text-center py-10 px-8 rounded-[20px] transition-all duration-300 bg-[#fbfbfd] hover:bg-white hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:translate-y-[-4px]">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#007aff] to-[#0051d5] rounded-2xl flex items-center justify-center mx-auto mb-6 text-[28px] text-white">
-                  🎯
-                </div>
-                <h3 className="text-[21px] font-semibold text-[#1d1d1f] mb-3">场景丰富</h3>
-                <p className="text-[17px] text-[#515154] leading-[1.5]">
-                  涵盖商务汇报、产品发布、数据分析、团队介绍等多种应用场景，一套模板满足多样化需求。
+              <div className="bg-white rounded-[20px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+                <div className="text-[32px] mb-4">🎯</div>
+                <h3 className="text-[20px] font-semibold text-[#1d1d1f] mb-2">Rich Scenarios</h3>
+                <p className="text-[15px] text-[#515154] leading-[1.5]">
+                  Covers various applications including business reports, product launches, data analysis, and team introductions.
                 </p>
               </div>
-
-              <div className="text-center py-10 px-8 rounded-[20px] transition-all duration-300 bg-[#fbfbfd] hover:bg-white hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:translate-y-[-4px]">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#007aff] to-[#0051d5] rounded-2xl flex items-center justify-center mx-auto mb-6 text-[28px] text-white">
-                  🆕
-                </div>
-                <h3 className="text-[21px] font-semibold text-[#1d1d1f] mb-3">持续更新</h3>
-                <p className="text-[17px] text-[#515154] leading-[1.5]">
-                  紧跟设计潮流，定期推出新款模板和样式更新，确保您的演示始终保持时尚前沿的视觉效果。
+              <div className="bg-white rounded-[20px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+                <div className="text-[32px] mb-4">🆕</div>
+                <h3 className="text-[20px] font-semibold text-[#1d1d1f] mb-2">Regular Updates</h3>
+                <p className="text-[15px] text-[#515154] leading-[1.5]">
+                  Stay current with design trends through regular template updates and style refreshes, keeping your presentations modern and fresh.
                 </p>
               </div>
             </div>
