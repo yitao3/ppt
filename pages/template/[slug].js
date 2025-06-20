@@ -73,7 +73,7 @@ export default function TemplateDetail({ template }) {
     } else {
       console.error('Image load failed after retries:', e.target.src);
       e.target.onerror = null;
-      e.target.src = isThumbnail ? '/placeholder-thumb.jpg' : '/placeholder-image.jpg';
+      e.target.src = isThumbnail ? '/placeholder-thumb.png' : '/placeholder-image.png';
     }
   };
 
@@ -266,12 +266,12 @@ export default function TemplateDetail({ template }) {
                       }`}
                     >
                       <div className="w-full h-full relative">
-                        <img
-                          src={preview.thumbnail_url}
-                          alt={`Thumbnail ${index + 1}`}
+                      <img
+                        src={preview.thumbnail_url}
+                        alt={`Thumbnail ${index + 1}`}
                           className="absolute inset-0 w-full h-full object-cover"
-                          onError={(e) => handleImageError(e, `thumbnail-${preview.id}`, true)}
-                        />
+                        onError={(e) => handleImageError(e, `thumbnail-${preview.id}`, true)}
+                      />
                       </div>
                     </button>
                   ))}
@@ -286,8 +286,8 @@ export default function TemplateDetail({ template }) {
                 <div className="relative group mb-6">
                   <div className="h-[102px] overflow-hidden">
                     <p className="text-[17px] text-[#515154] leading-[1.5] line-clamp-4 group-hover:line-clamp-none transition-all duration-300">
-                      {template.description || '这是一套精心设计的商务简约风格PPT模板，采用现代化的设计理念和清晰的布局结构，适用于企业汇报、产品发布、项目展示等多种商务场景。模板包含丰富的页面样式，让您的演示更加专业和出色。'}
-                    </p>
+                  {template.description || '这是一套精心设计的商务简约风格PPT模板，采用现代化的设计理念和清晰的布局结构，适用于企业汇报、产品发布、项目展示等多种商务场景。模板包含丰富的页面样式，让您的演示更加专业和出色。'}
+                </p>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-300"></div>
                 </div>
