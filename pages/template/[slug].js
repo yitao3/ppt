@@ -432,7 +432,7 @@ export async function getStaticPaths() {
     params: { slug: template.slug },
   }));
 
-  return { paths, fallback: false }; // fallback: false 意味着只渲染 getStaticPaths 返回的路径
+  return { paths, fallback: true }; // fallback: true 允许在请求时生成新页面
 }
 
 export async function getStaticProps({ params }) {
