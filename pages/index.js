@@ -73,9 +73,24 @@ export default function Home({ templates: initialTemplates }) {
   return (
     <div className="min-h-screen bg-[#fbfbfd]">
       <Head>
-        <title>PPT Templates</title>
-        <meta name="description" content="Free and premium PowerPoint templates" />
-        <link rel="icon" href="/favicon.ico" />
+        <title>Professional PowerPoint Templates - Free Download | Templates</title>
+        <meta name="description" content="Download professional PowerPoint templates for free. High-quality business, corporate, marketing, and creative presentation templates. Ready-to-use designs for your next presentation." />
+        <meta name="keywords" content="PowerPoint templates, presentation templates, business templates, free download, professional presentations, corporate templates, marketing templates" />
+        
+        {/* Open Graph for Homepage */}
+        <meta property="og:title" content="Professional PowerPoint Templates - Free Download" />
+        <meta property="og:description" content="Download professional PowerPoint templates for free. High-quality business, corporate, marketing, and creative presentation templates." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.freepowerpointslides.com" />
+        <meta property="og:image" content="https://www.freepowerpointslides.com/logo-brand.png" />
+        
+        {/* Twitter Card for Homepage */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Professional PowerPoint Templates - Free Download" />
+        <meta name="twitter:description" content="Download professional PowerPoint templates for free. High-quality business, corporate, marketing, and creative presentation templates." />
+        <meta name="twitter:image" content="https://www.freepowerpointslides.com/logo-brand.png" />
+        
+        <link rel="canonical" href="https://www.freepowerpointslides.com" />
       </Head>
 
       <Header />

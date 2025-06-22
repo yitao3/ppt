@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 // import { templates as mockTemplates } from '../../data/templates' // 导入模拟数据并重命名
@@ -90,6 +91,26 @@ export default function TemplateDetail({ template }) {
   if (!template) {
     return (
       <div className="min-h-screen bg-gray-50">
+        <Head>
+          <title>Template Not Found | Templates</title>
+          <meta name="description" content="Template not found" />
+          <meta name="keywords" content="PowerPoint template, presentation template, free download" />
+          
+          {/* Open Graph for Template Detail */}
+          <meta property="og:title" content="Template Not Found" />
+          <meta property="og:description" content="Template not found" />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content={`https://www.freepowerpointslides.com/template/${''}?notFound=true`} />
+          <meta property="og:image" content="https://www.freepowerpointslides.com/logo-brand.png" />
+          
+          {/* Twitter Card for Template Detail */}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content="Template Not Found" />
+          <meta name="twitter:description" content="Template not found" />
+          <meta name="twitter:image" content="https://www.freepowerpointslides.com/logo-brand.png" />
+          
+          <link rel="canonical" href={`https://www.freepowerpointslides.com/template/${''}?notFound=true`} />
+        </Head>
         <Header />
         <main className="container mx-auto px-4 py-16">
           <div className="text-center">
@@ -169,6 +190,26 @@ export default function TemplateDetail({ template }) {
 
   return (
     <div className="min-h-screen bg-[#fbfbfd]">
+      <Head>
+        <title>{template ? `${template.title} - PowerPoint Template Download` : 'Template Not Found'} | Templates</title>
+        <meta name="description" content={template ? `${template.title} - Professional PowerPoint template for ${template.category || 'business'} presentations. Free download with ${template.slides || 36} slides. ${template.description || 'High-quality design for professional presentations.'}` : 'Template not found'} />
+        <meta name="keywords" content={`${template?.title || 'PowerPoint'}, ${template?.category || 'business'} template, presentation template, free download, PowerPoint slides`} />
+        
+        {/* Open Graph for Template Detail */}
+        <meta property="og:title" content={template ? `${template.title} - PowerPoint Template` : 'Template Not Found'} />
+        <meta property="og:description" content={template ? `${template.title} - Professional PowerPoint template for ${template.category || 'business'} presentations. Free download.` : 'Template not found'} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://www.freepowerpointslides.com/template/${template?.slug || ''}`} />
+        <meta property="og:image" content={template?.ppt_previews?.[0]?.preview_url || 'https://www.freepowerpointslides.com/logo-brand.png'} />
+        
+        {/* Twitter Card for Template Detail */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={template ? `${template.title} - PowerPoint Template` : 'Template Not Found'} />
+        <meta name="twitter:description" content={template ? `${template.title} - Professional PowerPoint template for ${template.category || 'business'} presentations. Free download.` : 'Template not found'} />
+        <meta name="twitter:image" content={template?.ppt_previews?.[0]?.preview_url || 'https://www.freepowerpointslides.com/logo-brand.png'} />
+        
+        <link rel="canonical" href={`https://www.freepowerpointslides.com/template/${template?.slug || ''}`} />
+      </Head>
       <Header />
       <main>
         {/* Main Title Section */}
@@ -208,7 +249,7 @@ export default function TemplateDetail({ template }) {
         {/* Hero Section */}
         <section className="pt-[40px] pb-[100px]">
           <div className="max-w-[1350px] mx-auto px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 items-stretch">
               {/* Left - Preview Section */}
               <div className="relative max-w-[804px]">
                 <div className="relative bg-white rounded-[20px] shadow-[0_20px_40px_rgba(0,0,0,0.1)] overflow-hidden aspect-[16/9] border border-gray-100 mb-6 transition-transform duration-300">
@@ -279,17 +320,14 @@ export default function TemplateDetail({ template }) {
               </div>
 
               {/* Right - Info Section */}
-              <div className="bg-white rounded-[20px] p-8 shadow-[0_4px_20px_rgba(0,0,0,0.05)] w-[380px]">
-                <div className="h-[84px] mb-4">
-                  <h2 className="text-[28px] font-semibold text-[#1d1d1f] leading-tight">{template.title}</h2>
+              <div className="bg-white rounded-[20px] p-8 shadow-[0_4px_20px_rgba(0,0,0,0.05)] w-[380px] overflow-y-auto custom-scrollbar">
+                <div className="mb-4">
+                  <h2 className="text-[24px] font-semibold text-[#1d1d1f] leading-tight">{template.title}</h2>
                 </div>
-                <div className="relative group mb-6">
-                  <div className="h-[102px] overflow-hidden">
-                    <p className="text-[17px] text-[#515154] leading-[1.5] line-clamp-4 group-hover:line-clamp-none transition-all duration-300">
-                  {template.description || '这是一套精心设计的商务简约风格PPT模板，采用现代化的设计理念和清晰的布局结构，适用于企业汇报、产品发布、项目展示等多种商务场景。模板包含丰富的页面样式，让您的演示更加专业和出色。'}
-                </p>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-300"></div>
+                <div className="mb-6">
+                  <p className="text-[17px] text-[#515154] leading-[1.5]">
+                    {template.description || '这是一套精心设计的商务简约风格PPT模板，采用现代化的设计理念和清晰的布局结构，适用于企业汇报、产品发布、项目展示等多种商务场景。模板包含丰富的页面样式，让您的演示更加专业和出色。'}
+                  </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 mb-6 text-gray-700">

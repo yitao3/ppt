@@ -5,10 +5,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-links">
-          <Link href="/about">About</Link>
-          <Link href="/contact">Contact</Link>
-          <Link href="/privacy">Privacy Policy</Link>
-          <Link href="/terms">Terms of Service</Link>
+          {/* Footer links removed */}
         </div>
         <p className="copyright">Copyright © 2025 Templates. All rights reserved.</p>
       </div>

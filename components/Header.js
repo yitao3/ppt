@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
@@ -7,19 +8,22 @@ export default function Header() {
 
   const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
   ]
 
   return (
     <header className="header">
       <nav className="nav">
         <Link href="/" className="logo">
-          Templates
+          <Image 
+            src="/logo-brand.png" 
+            alt="Templates Logo" 
+            width={120} 
+            height={32} 
+            priority
+          />
         </Link>
         <ul className="nav-links">
-          <li><Link href="/about">About</Link></li>
-          <li><Link href="/contact">Contact</Link></li>
+          {/* Navigation links removed */}
         </ul>
       </nav>
     </header>
