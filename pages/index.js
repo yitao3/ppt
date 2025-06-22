@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Head from 'next/head'
 import Header from '../components/Header'
 import TemplateCard from '../components/TemplateCard'
@@ -21,11 +21,68 @@ const categories = [
   { id: 'personal-lifestyle', name: 'Personal & Lifestyle' }
 ]
 
+const DOTS = '...'
+
+const range = (start, end) => {
+  const length = end - start + 1
+  if (length <= 0) return []
+  return Array.from({ length }, (_, idx) => idx + start)
+}
+
+const usePagination = ({
+  totalPages,
+  siblingCount = 1,
+  currentPage
+}) => {
+  const paginationRange = useMemo(() => {
+    const totalPageNumbers = siblingCount + 5
+
+    if (totalPageNumbers >= totalPages) {
+      return range(1, totalPages)
+    }
+
+    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1)
+    const rightSiblingIndex = Math.min(
+      currentPage + siblingCount,
+      totalPages
+    )
+
+    const shouldShowLeftDots = leftSiblingIndex > 2
+    const shouldShowRightDots = rightSiblingIndex < totalPages - 2
+
+    const firstPageIndex = 1
+    const lastPageIndex = totalPages
+
+    if (!shouldShowLeftDots && shouldShowRightDots) {
+      let leftItemCount = 3 + 2 * siblingCount
+      let leftRange = range(1, leftItemCount)
+
+      return [...leftRange, DOTS, totalPages]
+    }
+
+    if (shouldShowLeftDots && !shouldShowRightDots) {
+      let rightItemCount = 3 + 2 * siblingCount
+      let rightRange = range(
+        totalPages - rightItemCount + 1,
+        totalPages
+      )
+      return [firstPageIndex, DOTS, ...rightRange]
+    }
+
+    if (shouldShowLeftDots && shouldShowRightDots) {
+      let middleRange = range(leftSiblingIndex, rightSiblingIndex)
+      return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex]
+    }
+  }, [totalPages, siblingCount, currentPage])
+
+  return paginationRange || []
+}
+
 export default function Home({ templates: initialTemplates }) {
   const [templates, setTemplates] = useState(initialTemplates)
   const [filteredTemplates, setFilteredTemplates] = useState(initialTemplates)
   const [sortType, setSortType] = useState('featured')
-  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [selectedCategory, setSelectedCategory] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 9
 
@@ -34,8 +91,9 @@ export default function Home({ templates: initialTemplates }) {
     let tempTemplates = [...templates];
 
     // Category filter
-    if (selectedCategory !== 'All') {
-      tempTemplates = tempTemplates.filter(template => template.category === selectedCategory)
+    if (selectedCategory !== 'all') {
+      const categoryName = categories.find(c => c.id === selectedCategory)?.name;
+      tempTemplates = tempTemplates.filter(template => template.category === categoryName)
     }
 
     // Sort
@@ -56,8 +114,9 @@ export default function Home({ templates: initialTemplates }) {
     setSortType(type)
   }
 
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category)
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategory(categoryId)
+    setCurrentPage(1)
   }
 
   const handlePageChange = (page) => {
@@ -69,6 +128,12 @@ export default function Home({ templates: initialTemplates }) {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   )
+
+  const paginationRange = usePagination({
+    currentPage,
+    totalPages,
+    siblingCount: 2,
+  })
 
   return (
     <div className="min-h-screen bg-[#fbfbfd]">
@@ -124,20 +189,20 @@ export default function Home({ templates: initialTemplates }) {
         <section className="featured-section">
           <div className="filter-controls">
             <div className="category-filters">
-              {[ 'All', ...Array.from(new Set(templates.map(t => t.category))) ].map(category => (
+              {categories.map(category => (
                 <button
-                  key={category}
+                  key={category.id}
                   className={`category-button ${
-                    selectedCategory === category ? 'active' : ''
+                    selectedCategory === category.id ? 'active' : ''
                   }`}
-                  onClick={() => handleCategoryChange(category)}
+                  onClick={() => handleCategoryChange(category.id)}
                 >
-                  {category}
+                  {category.name}
                 </button>
               ))}
             </div>
             <div className="sort-controls">
-              <button
+              <button 
                 className={`sort-button ${
                   sortType === 'featured' ? 'active' : ''
                 }`}
@@ -145,7 +210,7 @@ export default function Home({ templates: initialTemplates }) {
               >
                 Featured
               </button>
-              <button
+              <button 
                 className={`sort-button ${
                   sortType === 'newest' ? 'active' : ''
                 }`}
@@ -153,7 +218,7 @@ export default function Home({ templates: initialTemplates }) {
               >
                 Newest
               </button>
-              <button
+              <button 
                 className={`sort-button ${
                   sortType === 'popular' ? 'active' : ''
                 }`}
@@ -179,17 +244,23 @@ export default function Home({ templates: initialTemplates }) {
                 Previous
               </button>
               <div className="pagination-numbers">
-                {Array.from({ length: totalPages }, (_, i) => (
-                  <button
-                    key={i + 1}
-                    onClick={() => handlePageChange(i + 1)}
-                    className={`pagination-number ${
-                      currentPage === i + 1 ? 'active' : ''
-                    }`}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
+                {paginationRange.map((pageNumber, index) => {
+                  if (pageNumber === DOTS) {
+                    return <span key={`${pageNumber}-${index}`} className="pagination-number">...</span>
+                  }
+
+                  return (
+                    <button
+                      key={pageNumber}
+                      onClick={() => handlePageChange(pageNumber)}
+                      className={`pagination-number ${
+                        currentPage === pageNumber ? 'active' : ''
+                      }`}
+                    >
+                      {pageNumber}
+                    </button>
+                  )
+                })}
               </div>
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
@@ -201,7 +272,7 @@ export default function Home({ templates: initialTemplates }) {
             </div>
           )}
         </section>
-        
+
         <Stats />
 
       </main>
@@ -237,10 +308,10 @@ export async function getServerSideProps() {
     };
   } catch (error) {
     console.error('Error fetching templates:', error);
-    return {
-      props: {
+  return {
+    props: {
         templates: [],
-      },
+    },
     };
   }
 } 

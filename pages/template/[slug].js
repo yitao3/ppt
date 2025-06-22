@@ -326,8 +326,8 @@ export default function TemplateDetail({ template }) {
                 </div>
                 <div className="mb-6">
                   <p className="text-[17px] text-[#515154] leading-[1.5]">
-                    {template.description || '这是一套精心设计的商务简约风格PPT模板，采用现代化的设计理念和清晰的布局结构，适用于企业汇报、产品发布、项目展示等多种商务场景。模板包含丰富的页面样式，让您的演示更加专业和出色。'}
-                  </p>
+                  {template.description || '这是一套精心设计的商务简约风格PPT模板，采用现代化的设计理念和清晰的布局结构，适用于企业汇报、产品发布、项目展示等多种商务场景。模板包含丰富的页面样式，让您的演示更加专业和出色。'}
+                </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 mb-6 text-gray-700">
