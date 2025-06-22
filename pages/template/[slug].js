@@ -191,7 +191,7 @@ export default function TemplateDetail({ template }) {
   return (
     <div className="min-h-screen bg-[#fbfbfd]">
       <Head>
-        <title>{template ? `${template.title} - PowerPoint Template Download` : 'Template Not Found'} | Templates</title>
+        <title>{template ? `${template.title} - PowerPoint Template Download | Templates` : 'Template Not Found | Templates'}</title>
         <meta name="description" content={template ? `${template.title} - Professional PowerPoint template for ${template.category || 'business'} presentations. Free download with ${template.slides || 36} slides. ${template.description || 'High-quality design for professional presentations.'}` : 'Template not found'} />
         <meta name="keywords" content={`${template?.title || 'PowerPoint'}, ${template?.category || 'business'} template, presentation template, free download, PowerPoint slides`} />
         

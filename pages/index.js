@@ -41,11 +41,11 @@ export default function Home({ templates: initialTemplates }) {
     // Sort
     if (sortType === 'featured') {
       // Assuming isFeatured comes from Supabase or derived logic
-      tempTemplates.sort((a, b) => (b.isFeatured ? 1 : -1) - (a.isFeatured ? 1 : -1))
+      tempTemplates.sort((a, b) => (b.featured ? 1 : -1) - (a.featured ? 1 : -1))
     } else if (sortType === 'newest') {
-      tempTemplates.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      tempTemplates.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
     } else if (sortType === 'popular') {
-      tempTemplates.sort((a, b) => b.downloadCount - a.downloadCount)
+      tempTemplates.sort((a, b) => b.download_count - a.download_count)
     }
 
     setFilteredTemplates(tempTemplates)
@@ -198,11 +198,35 @@ export default function Home({ templates: initialTemplates }) {
 }
 
 export async function getServerSideProps() {
-  const supabaseTemplates = await getTemplates();
+  try {
+    const supabaseTemplates = await getTemplates();
+    
+    // 只保留首页需要的字段，减少数据大小
+    const optimizedTemplates = supabaseTemplates.map(template => ({
+      id: template.id,
+      title: template.title,
+      slug: template.slug,
+      category: template.category,
+      subcategory: template.subcategory,
+      preview_url: template.preview_url,
+      download_count: template.download_count || 0,
+      view_count: template.view_count || 0,
+      created_at: template.created_at,
+      updated_at: template.updated_at,
+      featured: template.featured || false
+    }));
 
-  return {
-    props: {
-      templates: supabaseTemplates,
-    },
-  };
+    return {
+      props: {
+        templates: optimizedTemplates,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching templates:', error);
+    return {
+      props: {
+        templates: [],
+      },
+    };
+  }
 } 

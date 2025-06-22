@@ -5,6 +5,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
+        {/* Viewport Meta Tag */}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
         {/* Default SEO Meta Tags */}
         <title>Professional PowerPoint Templates - Free Download | Templates</title>
         <meta name="description" content="Download professional PowerPoint templates for free. High-quality business, corporate, marketing, and creative presentation templates. Ready-to-use designs for your next presentation." />
@@ -27,7 +30,6 @@ function MyApp({ Component, pageProps }) {
         <meta name="twitter:image" content="https://www.freepowerpointslides.com/logo-brand.png" />
         
         {/* Additional Meta Tags */}
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#007aff" />
         <link rel="canonical" href="https://www.freepowerpointslides.com" />
       </Head>

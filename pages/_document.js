@@ -16,7 +16,6 @@ export default function Document() {
         <meta name="bingbot" content="index, follow" />
         
         {/* Additional Meta Tags */}
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#007aff" />
         <meta name="msapplication-TileColor" content="#007aff" />
         <meta name="application-name" content="Templates" />
