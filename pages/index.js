@@ -98,12 +98,26 @@ export default function Home({ templates: initialTemplates }) {
       <main>
         {/* Hero Section */}
         <section className="hero">
-          <h1>Unleash Your Ideas with Stunning PPT Templates.</h1>
-          <p className="subtitle">High-Quality, Modern, and Easy-to-Use Templates for Every Need.</p>
-          <p className="description">
-            Discover thousands of professionally designed PowerPoint, Google Slides, and Keynote templates.
-            Perfect for business, education, creative projects, and more.
-          </p>
+          <div className="hero-content">
+            <h1>Professional PowerPoint Templates</h1>
+            <p className="subtitle">Free Download • Premium Quality • Ready to Use</p>
+            <div className="hero-stats">
+              <div className="stat-item">
+                <span className="stat-number">150+</span>
+                <span className="stat-label">Templates</span>
+              </div>
+              <div className="stat-divider"></div>
+              <div className="stat-item">
+                <span className="stat-number">50K+</span>
+                <span className="stat-label">Downloads</span>
+              </div>
+              <div className="stat-divider"></div>
+              <div className="stat-item">
+                <span className="stat-number">100%</span>
+                <span className="stat-label">Free</span>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Featured Templates */}
